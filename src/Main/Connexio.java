@@ -37,7 +37,7 @@ public class Connexio
             this.con = DriverManager.getConnection
                 ("jdbc:mysql://localhost:3306/"+this.baseDades,this.usuariBD,this.contrasenyaBD);
             
-            System.out.println("Connexió amb la base de dades feta amb éxit.");
+            System.out.println("Connexió amb la base de dades feta amb éxit!");
         }
         catch(Exception e){
             e.printStackTrace();
