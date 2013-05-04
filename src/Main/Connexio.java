@@ -6,11 +6,13 @@ package Main;
 
 import static Main.ClientsC.ignoreSQLException;
 import java.util.ArrayList;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
 
 public class Connexio
@@ -42,26 +44,26 @@ public class Connexio
         }
     }
     
-    public ArrayList getIdClientsClientsArray() throws SQLException
+    public Vector getIdClientsClientsArray() throws SQLException
     {
-        String consulta = "SELECT idClient FROM clients";
+        String consulta = "SELECT idClient FROM clients;";
         Statement stmt = null;
-        ArrayList arrayIdClients = new ArrayList<String>();
+        Vector vectorIdClients = new Vector();
         
         try{
             stmt = this.con.createStatement();
             ResultSet rs = stmt.executeQuery(consulta);
-            
+
             while(rs.next()){
-                arrayIdClients.add(rs.getInt(1));
-            }
+                vectorIdClients.add(rs.getInt(1));
+            };
         }catch (SQLException e){
             printSQLException(e);
         }finally{
             stmt.close();
         }
         
-        return arrayIdClients;
+        return vectorIdClients;
     }
     
     

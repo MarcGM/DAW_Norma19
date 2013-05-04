@@ -4,8 +4,9 @@
  */
 package Main;
 
+import java.sql.*;
+
 /**
- *
  * @author Marc
  */
 public class CrearFitxerNorma19C extends javax.swing.JPanel {
@@ -37,15 +38,20 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
 
         jLabel1.setText("CLIENT PRESENTADOR:");
 
-        new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel());
+        Connexio connexioServidorBD = new Main.Connexio("localhost","daw_m4_uf6_pt1","usuari","contrasenya");
+        connexioServidorBD.connectarBD();
+        try{
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(connexioServidorBD.getIdClientsClientsArray()));
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, clientsList, eLProperty, jComboBox1, "");
-        bindingGroup.addBinding(jComboBoxBinding);
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientsList, org.jdesktop.beansbinding.ObjectProperty.create(), jComboBox1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
+            org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${}");
+            org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, clientsList, eLProperty, jComboBox1, "");
+            bindingGroup.addBinding(jComboBoxBinding);
+            org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientsList, org.jdesktop.beansbinding.ObjectProperty.create(), jComboBox1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+            bindingGroup.addBinding(binding);
 
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         jComboBox1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 jComboBox1ComponentMoved(evt);
