@@ -5,7 +5,12 @@
 package Main;
 
 import static Main.ClientsC.ignoreSQLException;
-import java.sql.*;
+import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class Connexio
@@ -36,6 +41,29 @@ public class Connexio
             e.printStackTrace();
         }
     }
+    
+    public ArrayList getIdClientsClientsArray() throws SQLException
+    {
+        String consulta = "SELECT idClient FROM clients";
+        Statement stmt = null;
+        ArrayList arrayIdClients = new ArrayList<String>();
+        
+        try{
+            stmt = this.con.createStatement();
+            ResultSet rs = stmt.executeQuery(consulta);
+            
+            while(rs.next()){
+                arrayIdClients.add(rs.getInt(1));
+            }
+        }catch (SQLException e){
+            printSQLException(e);
+        }finally{
+            stmt.close();
+        }
+        
+        return arrayIdClients;
+    }
+    
     
     public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
