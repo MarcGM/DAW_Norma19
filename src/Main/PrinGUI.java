@@ -47,7 +47,7 @@ public class PrinGUI extends javax.swing.JPanel
             }
         });
 
-        jButton2.setText("Generació de fitxers de domiciliacions");
+        jButton2.setText("Creació de fitxers de domiciliacions");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);

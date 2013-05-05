@@ -75,7 +75,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Generaci&#xf3; de fitxers de domiciliacions"/>
+        <Property name="text" type="java.lang.String" value="Creaci&#xf3; de fitxers de domiciliacions"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
