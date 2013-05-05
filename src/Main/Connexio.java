@@ -5,6 +5,7 @@
 package Main;
 
 import java.util.ArrayList;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -37,15 +38,15 @@ public class Connexio
             
             System.out.println("Connexió amb la base de dades feta amb éxit!");
         }
-        catch(SQLException e){
-            printSQLException(e);
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
     
-    public Vector getIdClientsClientsArray()
+    public Vector getIdClientsClientsArray() throws SQLException
     {
         String consulta = "SELECT idClient FROM clients;";
-        Statement stmt;
+        Statement stmt = null;
         Vector vectorIdClients = new Vector();
         
         try{
@@ -54,67 +55,14 @@ public class Connexio
 
             while(rs.next()){
                 vectorIdClients.add(rs.getInt(1));
-            }
-            stmt.close();
+            };
         }catch (SQLException e){
             printSQLException(e);
         }finally{
-            return vectorIdClients;
-        }
-    }
-    
-    public ArrayList<String> retornarRegistres(String consultaSQL)
-    {
-        Statement stmt;
-        ResultSet rs;
-        ArrayList<String> conjuntRegistres = new ArrayList<>();
-        
-        try{
-            stmt = this.con.createStatement();
-            rs = stmt.executeQuery(consultaSQL);
-            int cont = 1;
-            
-            while(rs.next()){
-                conjuntRegistres.add(rs.getString(cont));
-            }
-            
             stmt.close();
-        }catch (SQLException e){
-            printSQLException(e);
-        }finally{
-            return conjuntRegistres;
-        }  
-    }
-    
-    public ResultSet retornarRegistresResultset(String consultaSQL)
-    {
-        Statement stmnt;
-        ResultSet rst = null;
-        
-        try{
-            stmnt = this.con.createStatement();
-            rst = stmnt.executeQuery(consultaSQL);
-            
-            while(rst.next()){
-                //System.out.println(rst.getDate(2));
-                String ola = rst.getString(6);
-                System.out.println(ola);
-            }
-            stmnt.close();
-        }catch (SQLException e){
-            //printSQLException(e);
-            stmnt = this.con.createStatement();
-            rst = stmnt.executeQuery(consultaSQL);
-            
-            while(rst.next()){
-                //System.out.println(rst.getDate(2));
-                String ola = rst.getString(6);
-                System.out.println(ola);
-            }
-            stmnt.close();
-        }finally{
-            return rst;
         }
+        
+        return vectorIdClients;
     }
     
     
