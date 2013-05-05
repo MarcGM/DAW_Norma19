@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 
 /**
  *
- * @author Joan
+ * @author Marc
  */
 @Entity
 @Table(name = "clients", catalog = "daw_m4_uf6_pt1", schema = "")
@@ -30,7 +30,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Clients.findByNom", query = "SELECT c FROM Clients c WHERE c.nom = :nom"),
     @NamedQuery(name = "Clients.findByCognoms", query = "SELECT c FROM Clients c WHERE c.cognoms = :cognoms"),
     @NamedQuery(name = "Clients.findByNif", query = "SELECT c FROM Clients c WHERE c.nif = :nif"),
-    @NamedQuery(name = "Clients.findByCcc", query = "SELECT c FROM Clients c WHERE c.ccc = :ccc"),
+    //@NamedQuery(name = "Clients.findByCcc", query = "SELECT c FROM Clients c WHERE c.ccc = :ccc"),
     @NamedQuery(name = "Clients.findByTelefon", query = "SELECT c FROM Clients c WHERE c.telefon = :telefon"),
     @NamedQuery(name = "Clients.findByEmail", query = "SELECT c FROM Clients c WHERE c.email = :email"),
     @NamedQuery(name = "Clients.findByDonatAlta", query = "SELECT c FROM Clients c WHERE c.donatAlta = :donatAlta")})
@@ -53,9 +53,9 @@ public class Clients implements Serializable {
     @Column(name = "NIF")
     private String nif;
     @Basic(optional = false)
-    @Column(name = "CCC")
-    private String ccc;
-    @Basic(optional = false)
+    //@Column(name = "CCC")
+    //private String ccc;
+    //@Basic(optional = false)
     @Column(name = "telefon")
     private String telefon;
     @Basic(optional = false)
@@ -72,12 +72,12 @@ public class Clients implements Serializable {
         this.idClient = idClient;
     }
 
-    public Clients(Integer idClient, String nom, String cognoms, String nif, String ccc, String telefon, String email, boolean donatAlta) {
+    public Clients(Integer idClient, String nom, String cognoms, String nif,/* String ccc,*/ String telefon, String email, boolean donatAlta) {
         this.idClient = idClient;
         this.nom = nom;
         this.cognoms = cognoms;
         this.nif = nif;
-        this.ccc = ccc;
+        //this.ccc = ccc;
         this.telefon = telefon;
         this.email = email;
         this.donatAlta = donatAlta;
@@ -123,15 +123,15 @@ public class Clients implements Serializable {
         changeSupport.firePropertyChange("nif", oldNif, nif);
     }
 
-    public String getCcc() {
+    /*public String getCcc() {
         return ccc;
-    }
+    }*/
 
-    public void setCcc(String ccc) {
+    /*public void setCcc(String ccc) {
         String oldCcc = this.ccc;
         this.ccc = ccc;
         changeSupport.firePropertyChange("ccc", oldCcc, ccc);
-    }
+    }*/
 
     public String getTelefon() {
         return telefon;
