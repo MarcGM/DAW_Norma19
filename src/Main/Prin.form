@@ -26,8 +26,8 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="145" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="169" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" pref="577" max="-2" attributes="0"/>
@@ -77,6 +77,10 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Generaci&#xf3; de fitxers de domiciliacions"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>

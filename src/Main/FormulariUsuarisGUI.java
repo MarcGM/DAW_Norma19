@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Marc
+ * @author Joan
  */
-public class MainGUI extends JPanel {
+public class FormulariUsuarisGUI extends JPanel {
     
-    public MainGUI() {
+    public FormulariUsuarisGUI() {
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
@@ -40,9 +40,15 @@ public class MainGUI extends JPanel {
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
+        nomLabel = new javax.swing.JLabel();
+        cognomsLabel = new javax.swing.JLabel();
+        nifLabel = new javax.swing.JLabel();
         cccLabel = new javax.swing.JLabel();
         telefonLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
+        nomField = new javax.swing.JTextField();
+        cognomsField = new javax.swing.JTextField();
+        nifField = new javax.swing.JTextField();
         cccField = new javax.swing.JTextField();
         telefonField = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
@@ -53,27 +59,32 @@ public class MainGUI extends JPanel {
 
         FormListener formListener = new FormListener();
 
+        setPreferredSize(new java.awt.Dimension(833, 377));
+
+        masterTable.setColumnSelectionAllowed(true);
+
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nom}"));
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idClient}"));
+        columnBinding.setColumnName("ID Client");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nom}"));
         columnBinding.setColumnName("Nom");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cognoms}"));
         columnBinding.setColumnName("Cognoms");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nif}"));
         columnBinding.setColumnName("NIF");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ccc}"));
-        columnBinding.setColumnName("CCC");
+        columnBinding.setColumnName("C.C.C.");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${telefon}"));
         columnBinding.setColumnName("Teléfon");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
-        columnBinding.setColumnName("Correu electrònic");
+        columnBinding.setColumnName("Correu-e");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${donatAlta}"));
         columnBinding.setColumnName("Donat d'alta?");
@@ -81,14 +92,41 @@ public class MainGUI extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
+        masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        masterTable.getColumnModel().getColumn(0).setResizable(false);
+        masterTable.getColumnModel().getColumn(0).setPreferredWidth(18);
 
-        cccLabel.setText("Ccc:");
+        nomLabel.setText("Nom:");
 
-        telefonLabel.setText("Telefon:");
+        cognomsLabel.setText("Cognoms:");
 
-        emailLabel.setText("Email:");
+        nifLabel.setText("NIF:");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.ccc}"), cccField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        cccLabel.setText("C.C.C.:");
+
+        telefonLabel.setText("Teléfon:");
+
+        emailLabel.setText("Correu-e:");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nom}"), nomField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding.setSourceUnreadableValue(null);
+        bindingGroup.addBinding(binding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), nomField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.cognoms}"), cognomsField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding.setSourceUnreadableValue(null);
+        bindingGroup.addBinding(binding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), cognomsField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nif}"), nifField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding.setSourceUnreadableValue(null);
+        bindingGroup.addBinding(binding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), nifField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.ccc}"), cccField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         binding.setSourceUnreadableValue(null);
         bindingGroup.addBinding(binding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), cccField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -127,29 +165,40 @@ public class MainGUI extends JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(masterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cccLabel)
+                            .addComponent(nomLabel)
+                            .addComponent(cognomsLabel)
                             .addComponent(telefonLabel)
-                            .addComponent(emailLabel))
-                        .addGap(19, 19, 19)
+                            .addComponent(emailLabel)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(nifLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cccLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(newButton)
-                                .addGap(82, 82, 82)
-                                .addComponent(deleteButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(refreshButton)
-                                .addGap(62, 62, 62)
-                                .addComponent(saveButton)
-                                .addGap(84, 84, 84))
-                            .addComponent(cccField, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
-                            .addComponent(telefonField, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
-                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE))))
+                            .addComponent(nomField, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+                            .addComponent(cognomsField, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+                            .addComponent(nifField, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+                            .addComponent(cccField, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+                            .addComponent(telefonField, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addComponent(newButton)
+                        .addGap(98, 98, 98)
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                        .addComponent(refreshButton)
+                        .addGap(97, 97, 97)
+                        .addComponent(saveButton)
+                        .addGap(64, 64, 64)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(masterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+                .addGap(39, 39, 39))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {deleteButton, newButton, refreshButton, saveButton});
@@ -158,12 +207,24 @@ public class MainGUI extends JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(masterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addComponent(masterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomLabel)
+                    .addComponent(nomField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cognomsLabel)
+                    .addComponent(cognomsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nifLabel)
+                    .addComponent(nifField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cccLabel)
                     .addComponent(cccField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(telefonLabel)
                     .addComponent(telefonField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -171,13 +232,13 @@ public class MainGUI extends JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailLabel)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
                     .addComponent(refreshButton)
                     .addComponent(deleteButton)
                     .addComponent(newButton))
-                .addGap(22, 22, 22))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -189,16 +250,16 @@ public class MainGUI extends JPanel {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == saveButton) {
-                MainGUI.this.saveButtonActionPerformed(evt);
+                FormulariUsuarisGUI.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == refreshButton) {
-                MainGUI.this.refreshButtonActionPerformed(evt);
+                FormulariUsuarisGUI.this.refreshButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
-                MainGUI.this.newButtonActionPerformed(evt);
+                FormulariUsuarisGUI.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
-                MainGUI.this.deleteButtonActionPerformed(evt);
+                FormulariUsuarisGUI.this.deleteButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -256,6 +317,8 @@ public class MainGUI extends JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cccField;
     private javax.swing.JLabel cccLabel;
+    private javax.swing.JTextField cognomsField;
+    private javax.swing.JLabel cognomsLabel;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
@@ -264,6 +327,10 @@ public class MainGUI extends JPanel {
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
+    private javax.swing.JTextField nifField;
+    private javax.swing.JLabel nifLabel;
+    private javax.swing.JTextField nomField;
+    private javax.swing.JLabel nomLabel;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
@@ -275,7 +342,7 @@ public class MainGUI extends JPanel {
     public void mostrarPantalla()
     {
         JFrame frame = new JFrame();
-        frame.setContentPane(new MainGUI());
+        frame.setContentPane(new FormulariUsuarisGUI());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

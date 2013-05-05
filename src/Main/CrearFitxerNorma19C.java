@@ -5,6 +5,7 @@
 package Main;
 
 import java.sql.*;
+import javax.swing.JFrame;
 
 /**
  * @author Marc
@@ -126,4 +127,15 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    public void mostrarPantalla()
+    {
+        JFrame frame = new JFrame();
+        frame.setContentPane(new CrearFitxerNorma19C());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
+    
 }
