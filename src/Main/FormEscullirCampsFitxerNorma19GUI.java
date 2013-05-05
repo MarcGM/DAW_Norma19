@@ -149,7 +149,7 @@ public class FormEscullirCampsFitxerNorma19GUI extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int idPresentador = Integer.parseInt(jComboBox1.getSelectedItem().toString());
         int idOrdenante = Integer.parseInt(jComboBox2.getSelectedItem().toString());
-        FitxerNorma19 nouFitxerNorma19 = new FitxerNorma19(idPresentador,idOrdenante);
+        CreacioFitxerNorma19 nouFitxerNorma19 = new CreacioFitxerNorma19(idPresentador,idOrdenante);
         nouFitxerNorma19.start();
         
     }//GEN-LAST:event_jButton1ActionPerformed
