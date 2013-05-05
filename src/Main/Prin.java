@@ -89,14 +89,7 @@ public class Prin extends javax.swing.JPanel
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         MainGUI modificacioClientsGUI = new MainGUI();
-        modificacioClientsGUI.main();
-        
-        /*Dimension dlgSize = dg.getPreferredSize(); 
-        Dimension pantalla = getSize(); 
-        Dimension ventana = dg.getSize() ; 
-        dg.setLocation((pantalla.width - dg.WIDTH ) / 2 , 
-        (pantalla.height - dg.HEIGHT) / 2); 
-        dg.setVisible(true) ; // ESTO HACE QUE SE VEA EL SEGUNDO JFRAME..*/ 
+        modificacioClientsGUI.mostrarPantalla();
     }//GEN-LAST:event_jButton1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -106,17 +99,13 @@ public class Prin extends javax.swing.JPanel
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
-    public static void main(String[] args)
+    public void mostrarPantalla()
     {
-        EventQueue.invokeLater(new Runnable() {
-            public void run(){
-                JFrame frame = new JFrame();
-                frame.setContentPane(new Prin());
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
+        JFrame frame = new JFrame();
+        frame.setContentPane(new Prin());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
     
     
