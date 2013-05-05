@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Marc
+ * @author Joan
  */
 public class FormClientsGUI extends JPanel {
     

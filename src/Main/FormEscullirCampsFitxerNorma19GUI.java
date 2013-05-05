@@ -130,18 +130,6 @@ public class FormEscullirCampsFitxerNorma19GUI extends javax.swing.JPanel {
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int idPresentador = 3;//Integer.parseInt(jComboBox1.getSelectedItem().toString());
-        int idOrdenante = Integer.parseInt(jComboBox2.getSelectedItem().toString());
-        FitxerNorma19 nouFitxerNorma19 = new FitxerNorma19(idPresentador,idOrdenante);
-        nouFitxerNorma19.start();
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -153,6 +141,18 @@ public class FormEscullirCampsFitxerNorma19GUI extends javax.swing.JPanel {
     private void jComboBox1ComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jComboBox1ComponentMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ComponentMoved
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int idPresentador = Integer.parseInt(jComboBox1.getSelectedItem().toString());
+        int idOrdenante = Integer.parseInt(jComboBox2.getSelectedItem().toString());
+        FitxerNorma19 nouFitxerNorma19 = new FitxerNorma19(idPresentador,idOrdenante);
+        nouFitxerNorma19.start();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<Main.Clients> clientsList;
