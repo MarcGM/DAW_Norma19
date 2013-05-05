@@ -16,9 +16,9 @@ import javax.swing.JPanel;
  *
  * @author Joan
  */
-public class FormulariUsuarisGUI extends JPanel {
+public class FormClientsGUI extends JPanel {
     
-    public FormulariUsuarisGUI() {
+    public FormClientsGUI() {
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
@@ -250,16 +250,16 @@ public class FormulariUsuarisGUI extends JPanel {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == saveButton) {
-                FormulariUsuarisGUI.this.saveButtonActionPerformed(evt);
+                FormClientsGUI.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == refreshButton) {
-                FormulariUsuarisGUI.this.refreshButtonActionPerformed(evt);
+                FormClientsGUI.this.refreshButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
-                FormulariUsuarisGUI.this.newButtonActionPerformed(evt);
+                FormClientsGUI.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
-                FormulariUsuarisGUI.this.deleteButtonActionPerformed(evt);
+                FormClientsGUI.this.deleteButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -342,7 +342,7 @@ public class FormulariUsuarisGUI extends JPanel {
     public void mostrarPantalla()
     {
         JFrame frame = new JFrame();
-        frame.setContentPane(new FormulariUsuarisGUI());
+        frame.setContentPane(new FormClientsGUI());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

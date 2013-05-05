@@ -6,16 +6,17 @@ package Main;
 
 import java.sql.*;
 import javax.swing.JFrame;
+import java.lang.Integer;
 
 /**
  * @author Marc
  */
-public class CrearFitxerNorma19C extends javax.swing.JPanel {
+public class FormEscullirCampsFitxerNorma19GUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form CrearFitxerNorma19C
+     * Creates new form FormEscullirCampsFitxerNorma19GUI
      */
-    public CrearFitxerNorma19C() {
+    public FormEscullirCampsFitxerNorma19GUI() {
         initComponents();
     }
 
@@ -36,6 +37,7 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setText("CLIENT PRESENTADOR:");
 
@@ -83,6 +85,13 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("GENERAR DOCUMENT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,15 +102,19 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox2, 0, 106, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -109,7 +122,9 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -131,10 +146,19 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int idPresentador = Integer.parseInt(jComboBox1.getSelectedItem().toString());
+        int idOrdenante = Integer.parseInt(jComboBox2.getSelectedItem().toString());
+        FitxerNorma19 nouFitxerNorma19 = new FitxerNorma19(idPresentador,idOrdenante);
+        nouFitxerNorma19.start();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<Main.Clients> clientsList;
     private javax.persistence.Query clientsQuery;
     private javax.persistence.EntityManager daw_m4_uf6_pt1PUEntityManager;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -145,7 +169,7 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
     public void mostrarPantalla()
     {
         JFrame frame = new JFrame();
-        frame.setContentPane(new CrearFitxerNorma19C());
+        frame.setContentPane(new FormEscullirCampsFitxerNorma19GUI());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

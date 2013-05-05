@@ -4,7 +4,6 @@
 
 package Main;
 
-import static Main.ClientsC.ignoreSQLException;
 import java.util.ArrayList;
 import java.lang.reflect.Array;
 import java.sql.Connection;

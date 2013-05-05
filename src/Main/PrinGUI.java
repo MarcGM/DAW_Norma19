@@ -11,13 +11,13 @@ import javax.swing.JFrame;
 /*
  * @author Marc
  */
-public class Prin extends javax.swing.JPanel
+public class PrinGUI extends javax.swing.JPanel
 {
 
     /**
-     * Creates new form Prin
+     * Creates new form PrinGUI
      */
-    public Prin() {
+    public PrinGUI() {
         initComponents();
     }
 
@@ -98,7 +98,7 @@ public class Prin extends javax.swing.JPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        FormulariUsuarisGUI formulariUsuaris = new FormulariUsuarisGUI();
+        FormClientsGUI formulariUsuaris = new FormClientsGUI();
         formulariUsuaris.mostrarPantalla();
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -107,7 +107,7 @@ public class Prin extends javax.swing.JPanel
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        CrearFitxerNorma19C formCrearFitxerNorma19 = new CrearFitxerNorma19C();
+        FormEscullirCampsFitxerNorma19GUI formCrearFitxerNorma19 = new FormEscullirCampsFitxerNorma19GUI();
         formCrearFitxerNorma19.mostrarPantalla();
     }//GEN-LAST:event_jButton2MouseClicked
 
@@ -121,7 +121,7 @@ public class Prin extends javax.swing.JPanel
     public void mostrarPantalla()
     {
         JFrame frame = new JFrame();
-        frame.setContentPane(new Prin());
+        frame.setContentPane(new PrinGUI());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
