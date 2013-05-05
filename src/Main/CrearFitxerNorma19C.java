@@ -71,7 +71,17 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
 
         jLabel2.setText("CLIENT ORDENANT:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        connexioServidorBD.connectarBD();
+        try{
+            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(connexioServidorBD.getIdClientsClientsArray()));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -116,6 +126,10 @@ public class CrearFitxerNorma19C extends javax.swing.JPanel {
     private void jComboBox1ComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jComboBox1ComponentMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ComponentMoved
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<Main.Clients> clientsList;
