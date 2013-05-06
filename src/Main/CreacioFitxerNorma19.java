@@ -33,6 +33,8 @@ public class CreacioFitxerNorma19
     
     public String sumaTotalImportes;
     
+    public int numeroTotalRegistrosSoporte = 0;
+    
     
     public CreacioFitxerNorma19(int idClientePresentador,int idClienteOrdenante)
     {
@@ -81,6 +83,7 @@ public class CreacioFitxerNorma19
                 fechaConfeccionSoporte + espaisEnBlanc(6) + nombreDelClientePresentador + espaisEnBlanc(20) + entidadReceptora + oficina +
                 espaisEnBlanc(12) + espaisEnBlanc(40) + espaisEnBlanc(14);
         
+        this.numeroTotalRegistrosSoporte++;
     }
     
     public void crearCapceleraOrdenante()
@@ -118,6 +121,8 @@ public class CreacioFitxerNorma19
                 fechaConfeccionSoporte + fechaDeCargo + nombreDelClienteOrdenante + entidad_CCCClienteOrdenante + 
                 oficina_CCCClienteOrdenante + DC_CCCClienteOrdenante + numeroCuenta_CCCClienteOrdenante + espaisEnBlanc(8) + procedimiento +
                 espaisEnBlanc(10) + espaisEnBlanc(40) + espaisEnBlanc(14);
+        
+        this.numeroTotalRegistrosSoporte++;
     }
     
     public void crearIndividualObligatorio()
@@ -174,6 +179,7 @@ public class CreacioFitxerNorma19
                 arrayLiniesFitxerIO.add(liniaIndividualObligatorio);
                 
                 this.numDomiciliacionesCO++;
+                this.numeroTotalRegistrosSoporte++;
             }
         }catch(SQLException e){
             printSQLException(e);
@@ -204,22 +210,32 @@ public class CreacioFitxerNorma19
         this.liniaTotalOrdenante = codigoDeRegistro + codigoDeDato + NIF_codigoOrdenante + sufijo_codigoOrdenante +
                         espaisEnBlanc(12) + espaisEnBlanc(40) + espaisEnBlanc(20) + sumaImportesOrdenante + espaisEnBlanc(6) + 
                         numeroDomiciliacionesOrdenante + numeroTotalRegistroOrdenante + espaisEnBlanc(20) + espaisEnBlanc(18);
+        
+        this.numeroTotalRegistrosSoporte++;
     }
     
     public void crearTotalGeneral()
     {
+        this.numeroTotalRegistrosSoporte++;
+        
         String codigoDeRegistro = "59";
         String codigoDeDato = "80";
         String NIF_codigoPresentador = this.nifCodigoPresentadorCompartit;
         String sufijo_codigoPresentador = this.sufijoCodigoPresentadorCompartit;
         String numeroDeOrdenantes = "0001";
         String totalImportes = this.sumaTotalImportes;
-        String numeroTotalDeDomiciliaciones = null;
-        String numeroTotalRegistrosSoporte = null;
+        
+        String numeroTotalDeDomiciliaciones = String.valueOf(this.numDomiciliacionesCO);
+        int numEspaisBlancsTG = 10 - numeroTotalDeDomiciliaciones.length();
+        numeroTotalDeDomiciliaciones = espaisEnBlanc(numEspaisBlancsTG) + numeroTotalDeDomiciliaciones;
+        
+        String numeroRegistrosSoporte = String.valueOf(this.numeroTotalRegistrosSoporte);
+        int numEspaisBlancsTGS = 10 - numeroRegistrosSoporte.length();
+        numeroRegistrosSoporte = espaisEnBlanc(numEspaisBlancsTGS) + numeroRegistrosSoporte;
         
         this.liniaTotalGeneral = codigoDeRegistro + codigoDeDato + NIF_codigoPresentador + sufijo_codigoPresentador + espaisEnBlanc(12) +
                     espaisEnBlanc(40) + numeroDeOrdenantes + espaisEnBlanc(16) + totalImportes + espaisEnBlanc(6) + numeroTotalDeDomiciliaciones +
-                    numeroTotalRegistrosSoporte + espaisEnBlanc(20) + espaisEnBlanc(18);
+                    numeroRegistrosSoporte + espaisEnBlanc(20) + espaisEnBlanc(18);
     }
     
     
