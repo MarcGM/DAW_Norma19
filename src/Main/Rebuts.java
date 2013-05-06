@@ -25,7 +25,7 @@ import javax.persistence.Transient;
 
 /**
  *
- * @author Joan
+ * @author Marc
  */
 @Entity
 @Table(name = "rebuts", catalog = "daw_m4_uf6_pt1", schema = "")
