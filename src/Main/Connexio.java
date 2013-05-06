@@ -65,20 +65,20 @@ public class Connexio
     
     public ArrayList<String> retornarRegistres(String consultaSQL)
     {
-        Statement stmt;
+        Statement stmt=null;
         ResultSet rs;
         ArrayList<String> conjuntRegistres = new ArrayList<>();
         
         try{
             stmt = this.con.createStatement();
             rs = stmt.executeQuery(consultaSQL);
-            int cont = 1;
             
             while(rs.next()){
-                conjuntRegistres.add(rs.getString(cont));
+                for(int i=1; i<=12; i++){
+                    conjuntRegistres.add(rs.getString(i));
+                }
             }
             stmt.close();
-            this.con.close();
         }catch (SQLException e){
             printSQLException(e);
         }finally{

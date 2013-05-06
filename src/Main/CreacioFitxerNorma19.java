@@ -15,6 +15,7 @@ public class CreacioFitxerNorma19
     public int idClienteOrdenante;
     public Connexio connexio;
     public Calendar calendariGlobal;
+    public EscriureFitxerN19 fitxerN19;
     
     public String liniaCapceleraDePresentador;
     public String liniaCapceleraDeOrdenante;
@@ -46,7 +47,15 @@ public class CreacioFitxerNorma19
     public void start()
     {   
         this.connexio = new Connexio("localhost","daw_m4_uf6_pt1","usuari","contrasenya");
+        this.connexio.connectarBD();
+        this.crearCapceleraPresentador();
+        this.crearCapceleraOrdenante();
         this.crearIndividualObligatorio();
+        this.crearTotalOrdenante();
+        this.crearTotalGeneral();
+        
+        this.fitxerN19 = new EscriureFitxerN19(this.liniaCapceleraDePresentador, this.liniaCapceleraDeOrdenante, this. arrayLiniesFitxerIO, this.liniaTotalOrdenante, this.liniaTotalGeneral);
+        this.fitxerN19.start();
     }
     
     public void crearCapceleraPresentador()
@@ -134,8 +143,9 @@ public class CreacioFitxerNorma19
         try{
             Statement stmt = null;
             ResultSet rs = null;
-            Connexio connexio_2 = new Connexio("localhost","daw_m4_uf6_pt1","usuari","contrasenya");
-            ResultSet consultaRegistresIO = connexio_2.retornarRegistresResultset("SELECT * FROM rebuts WHERE idClienteOrdenante = "+this.idClienteOrdenante+" AND fechaRecibo >= '"+sqlDate+"';");
+            //Connexio connexio_2 = new Connexio("localhost","daw_m4_uf6_pt1","usuari","contrasenya");
+            //connexio_2.connectarBD();
+            ResultSet consultaRegistresIO = this.connexio.retornarRegistresResultset("SELECT * FROM rebuts WHERE idClienteOrdenante = "+this.idClienteOrdenante+" AND fechaRecibo >= '"+sqlDate+"';");
             
             while(consultaRegistresIO.next())
             {
@@ -161,10 +171,7 @@ public class CreacioFitxerNorma19
                 String numeroCuenta_CCCAdeudo = consultaRegistresIO.getString(9);
                 
                 String importe = consultaRegistresIO.getString(10);
-                String quantStringImportePartEntera = importe.substring(0,8);
-                String quantStringImportePartDecimal = importe.substring(8,10);
-                String quantStringImporte = quantStringImportePartEntera+"."+quantStringImportePartDecimal;
-                int quantIntimporte = Integer.parseInt(quantStringImporte);
+                int quantIntimporte = Integer.parseInt(importe);
                 this.quantIntTotalCOimporte = quantIntTotalCOimporte + quantIntimporte;
                 
                 String primerCampoConcepto = consultaRegistresIO.getString(11);
