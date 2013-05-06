@@ -104,6 +104,19 @@ public class Connexio
         }
     }
     
+    public void actualitzarEstatRebut(int idRebut)
+    {
+        Statement stmt = null;
+        ResultSet rs;
+        try{
+            stmt = this.con.createStatement();
+            stmt.executeUpdate("UPDATE rebuts SET rebutGenerat = 1 WHERE idRebut = "+idRebut+";");
+            stmt.close();
+        }catch(SQLException e){
+            printSQLException(e);
+        }
+    }
+    
     
     public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

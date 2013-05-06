@@ -143,9 +143,8 @@ public class CreacioFitxerNorma19
         try{
             Statement stmt = null;
             ResultSet rs = null;
-            //Connexio connexio_2 = new Connexio("localhost","daw_m4_uf6_pt1","usuari","contrasenya");
-            //connexio_2.connectarBD();
-            ResultSet consultaRegistresIO = this.connexio.retornarRegistresResultset("SELECT * FROM rebuts WHERE idClienteOrdenante = "+this.idClienteOrdenante+" AND fechaRecibo >= '"+sqlDate+"';");
+
+            ResultSet consultaRegistresIO = this.connexio.retornarRegistresResultset("SELECT * FROM rebuts WHERE idClienteOrdenante = "+this.idClienteOrdenante+" AND fechaRecibo >= '"+sqlDate+"' AND rebutGenerat = 0;");
             
             while(consultaRegistresIO.next())
             {
@@ -153,6 +152,8 @@ public class CreacioFitxerNorma19
                 int idRebutConsulta = consultaRegistresIO.getInt(1);
                 System.out.println(idRebutConsulta);
                 ArrayList<String> consultaIO_CO = this.connexio.retornarRegistres("SELECT * FROM clients WHERE idClient = '"+consultaRegistresIO.getInt(2)+"';"); 
+                //Aquesta instrució de sota, actualitza l'esta del Rebut.
+                this.connexio.actualitzarEstatRebut(consultaRegistresIO.getInt(1));
                 
                 String codigoDeRegistro = "56";
                 String codigoDeDato = "80";
