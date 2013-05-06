@@ -46,6 +46,11 @@ public class PrinGUI extends javax.swing.JPanel
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Creació de fitxers de domiciliacions");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -98,8 +103,8 @@ public class PrinGUI extends javax.swing.JPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        FormClientsGUI formulariUsuaris = new FormClientsGUI();
-        formulariUsuaris.mostrarPantalla();
+        FormModificarClientsGUI formulariModificarClients = new FormModificarClientsGUI();
+        formulariModificarClients.mostrarPantalla();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -110,6 +115,10 @@ public class PrinGUI extends javax.swing.JPanel
         FormEscullirCampsFitxerNorma19GUI formCrearFitxerNorma19 = new FormEscullirCampsFitxerNorma19GUI();
         formCrearFitxerNorma19.mostrarPantalla();
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -30,16 +30,8 @@ public class EscriureFitxerN19
     }
     
     public void start()
-    {
-        //Proves: >>>
-        System.out.println(this.liniaCapceleraDePresentador);
-        System.out.println(this.liniaCapceleraDeOrdenante);
-        
-        System.out.println(this.liniaTotalOrdenante);
-        System.out.println(this.liniaTotalGeneral);
-        
+    {      
         escriureFitxerFinal();
-        
     }
     
     public void escriureFitxerFinal()

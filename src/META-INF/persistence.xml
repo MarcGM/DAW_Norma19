@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Main.Clients_1</class>
     <class>Main.Clients</class>
+    <class>Main.Rebuts</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/daw_m4_uf6_pt1"/>
       <property name="javax.persistence.jdbc.password" value="contrasenya"/>

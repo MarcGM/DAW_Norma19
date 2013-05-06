@@ -7,7 +7,9 @@ package Main;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -64,6 +67,8 @@ public class Clients implements Serializable {
     @Basic(optional = false)
     @Column(name = "donatAlta")
     private boolean donatAlta;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclienteordenante")
+    private Collection<Rebuts> rebutsCollection;
 
     public Clients() {
     }
@@ -194,6 +199,14 @@ public class Clients implements Serializable {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
+    }
+
+    public Collection<Rebuts> getRebutsCollection() {
+        return rebutsCollection;
+    }
+
+    public void setRebutsCollection(Collection<Rebuts> rebutsCollection) {
+        this.rebutsCollection = rebutsCollection;
     }
     
 }
