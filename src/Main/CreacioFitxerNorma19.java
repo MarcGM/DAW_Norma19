@@ -56,7 +56,11 @@ public class CreacioFitxerNorma19
         String anyActual = String.valueOf(calendari.YEAR);
         String fechaConfeccionSoporte = diaActual + mesActual + anyActual;
         
-        String nombreDelClientePresentador = consulta_AL_cPresentador.get(0); //OMPLIR i possar els "'espais blancs a la dreta' que facin falta". //Consulta BD Taula Clients.
+        String nombreDelClientePresentador = consulta_AL_cPresentador.get(0);
+        int llargada_nombreDelClientePresentador = nombreDelClientePresentador.length();
+        int numEspais_nombreDelClientePresentador = 40 - llargada_nombreDelClientePresentador;
+        nombreDelClientePresentador = nombreDelClientePresentador + espaisEnBlanc(numEspais_nombreDelClientePresentador);
+        
         String entidadReceptora = consulta_AL_cPresentador.get(4);
         String oficina = consulta_AL_cPresentador.get(5);
         
@@ -85,7 +89,12 @@ public class CreacioFitxerNorma19
         String fechaConfeccionSoporte = diaActual + mesActual + anyActual;
         
         String fechaDeCargo = fechaConfeccionSoporte;
-        String nombreDelClienteOrdenante = consulta_AL_cOrdenante.get(1); //OMPLIR i possar els "'espais blancs a la dreta' que facin falta". //Consulta BD Taula Clients.
+        
+        String nombreDelClienteOrdenante = consulta_AL_cOrdenante.get(1);
+        int llargada_nombreDelClienteOrdenante = nombreDelClienteOrdenante.length();
+        int numEspais_nombreDelClienteOrdenante = 40 - llargada_nombreDelClienteOrdenante;
+        nombreDelClienteOrdenante = nombreDelClienteOrdenante + espaisEnBlanc(numEspais_nombreDelClienteOrdenante);
+        
         String entidad_CCCClienteOrdenante = consulta_AL_cOrdenante.get(5);
         String oficina_CCCClienteOrdenante = consulta_AL_cOrdenante.get(6);
         String DC_CCCClienteOrdenante = consulta_AL_cOrdenante.get(7);
