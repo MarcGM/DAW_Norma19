@@ -24,12 +24,21 @@ public class CreacioFitxerNorma19
     
     public String nifCodigoOrdenanteCompartit;
     public String sufijoCodigoOrdenanteCompartit;
+    public String nifCodigoPresentadorCompartit;
+    public String sufijoCodigoPresentadorCompartit;
+    
+    public int quantIntTotalCOimporte;
+    
+    public int numDomiciliacionesCO = 0;
+    
+    public String sumaTotalImportes;
     
     
     public CreacioFitxerNorma19(int idClientePresentador,int idClienteOrdenante)
     {
         this.idClientePresentador = idClientePresentador;
         this.idClienteOrdenante = idClienteOrdenante;
+        this.quantIntTotalCOimporte = 0;
     }
     
     public void start()
@@ -46,6 +55,9 @@ public class CreacioFitxerNorma19
         String codigoDeDato = "80";
         String NIF_codigoPresentador = consulta_AL_cPresentador.get(2);
         String sufijo_codigoPresentador = consulta_AL_cPresentador.get(3);
+        
+        this.nifCodigoPresentadorCompartit = NIF_codigoPresentador;
+        this.sufijoCodigoPresentadorCompartit = sufijo_codigoPresentador;
         
         Calendar calendari = Calendar.getInstance();
         
@@ -125,25 +137,43 @@ public class CreacioFitxerNorma19
                 //Xivato pera saber quin rebut està fent actualment
                 int idRebutConsulta = consultaRegistresIO.getInt(1);
                 System.out.println(idRebutConsulta);
+                ArrayList<String> consultaIO_CO = this.connexio.retornarRegistres("SELECT * FROM clients WHERE idClient = '"+consultaRegistresIO.getInt(2)+"';"); 
                 
                 String codigoDeRegistro = "56";
                 String codigoDeDato = "80";
-                String NIF_codigoOrdenante = ""; //OMPLIR //Consulta BD Taula Clients.
-                String sufijo_codigoOrdenante = ""; //OMPLIR
-                String codigoDeReferencia = consultaRegistresIO.getString(4); //OMPLIR
-                String nombreTitularDeLaDomiciliacion = ""; //OMPLIR //Consulta BD Taula Clients.
-                String entidad_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-                String oficina_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-                String DC_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-                String numeroCuenta_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-                String importe = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
-                String primerCampoConcepto = ""; //OMPLIR
+                String NIF_codigoOrdenante = consultaIO_CO.get(3);
+                String sufijo_codigoOrdenante = consultaIO_CO.get(4);
+                String codigoDeReferencia = consultaRegistresIO.getString(4);
+                
+                String nombreTitularDeLaDomiciliacion = consultaRegistresIO.getString(5);
+                int llargada_nombreTitularDeLaDomiciliacion = nombreTitularDeLaDomiciliacion.length();
+                int numEspais_nombreTitularDeLaDomiciliacion = 40 - llargada_nombreTitularDeLaDomiciliacion;
+                nombreTitularDeLaDomiciliacion = nombreTitularDeLaDomiciliacion + espaisEnBlanc(numEspais_nombreTitularDeLaDomiciliacion);
+                
+                String entidad_CCCAdeudo = consultaRegistresIO.getString(6);
+                String oficina_CCCAdeudo = consultaRegistresIO.getString(7);
+                String DC_CCCAdeudo = consultaRegistresIO.getString(8);
+                String numeroCuenta_CCCAdeudo = consultaRegistresIO.getString(9);
+                
+                String importe = consultaRegistresIO.getString(10);
+                String quantStringImportePartEntera = importe.substring(0,8);
+                String quantStringImportePartDecimal = importe.substring(8,10);
+                String quantStringImporte = quantStringImportePartEntera+"."+quantStringImportePartDecimal;
+                int quantIntimporte = Integer.parseInt(quantStringImporte);
+                this.quantIntTotalCOimporte = quantIntTotalCOimporte + quantIntimporte;
+                
+                String primerCampoConcepto = consultaRegistresIO.getString(11);
+                int llargada_primerCampoConcepto = primerCampoConcepto.length();
+                int numEspais_primerCampoConcepto = 40 - llargada_primerCampoConcepto;
+                primerCampoConcepto = primerCampoConcepto + espaisEnBlanc(numEspais_primerCampoConcepto);
 
                 String liniaIndividualObligatorio = codigoDeRegistro + codigoDeDato + NIF_codigoOrdenante + sufijo_codigoOrdenante +
                         codigoDeReferencia + nombreTitularDeLaDomiciliacion + entidad_CCCAdeudo + oficina_CCCAdeudo + DC_CCCAdeudo +
                         numeroCuenta_CCCAdeudo + importe + espaisEnBlanc(16) + primerCampoConcepto + espaisEnBlanc(8);
                 
                 arrayLiniesFitxerIO.add(liniaIndividualObligatorio);
+                
+                this.numDomiciliacionesCO++;
             }
         }catch(SQLException e){
             printSQLException(e);
@@ -158,18 +188,38 @@ public class CreacioFitxerNorma19
         String codigoDeDato = "80";
         String NIF_codigoOrdenante = this.nifCodigoOrdenanteCompartit;
         String sufijo_codigoOrdenante = this.sufijoCodigoOrdenanteCompartit;
-        String sumaImportesOrdenante = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
-        String numeroDomiciliacionesOrdenante = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
-        String numeroTotalRegistroOrdenante = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
         
-        //this.liniaTotalOrdenante = 
+        String sumaImportesOrdenante = String.valueOf(this.quantIntTotalCOimporte);
+        int numEspaisBlancsSIO = 10 - sumaImportesOrdenante.length();
+        sumaImportesOrdenante = espaisEnBlanc(numEspaisBlancsSIO)+ sumaImportesOrdenante;
+        this.sumaTotalImportes = sumaImportesOrdenante;
+        
+        String numeroDomiciliacionesOrdenante = String.valueOf(this.numDomiciliacionesCO);
+        int numEspaisBlancsNDO = 10 - numeroDomiciliacionesOrdenante.length();
+        numeroDomiciliacionesOrdenante = espaisEnBlanc(numEspaisBlancsNDO)+numeroDomiciliacionesOrdenante;
+        
+        String numeroTotalRegistroOrdenante = numeroDomiciliacionesOrdenante;
+        
+        
+        this.liniaTotalOrdenante = codigoDeRegistro + codigoDeDato + NIF_codigoOrdenante + sufijo_codigoOrdenante +
+                        espaisEnBlanc(12) + espaisEnBlanc(40) + espaisEnBlanc(20) + sumaImportesOrdenante + espaisEnBlanc(6) + 
+                        numeroDomiciliacionesOrdenante + numeroTotalRegistroOrdenante + espaisEnBlanc(20) + espaisEnBlanc(18);
     }
     
     public void crearTotalGeneral()
     {
+        String codigoDeRegistro = "59";
+        String codigoDeDato = "80";
+        String NIF_codigoPresentador = this.nifCodigoPresentadorCompartit;
+        String sufijo_codigoPresentador = this.sufijoCodigoPresentadorCompartit;
+        String numeroDeOrdenantes = "0001";
+        String totalImportes = this.sumaTotalImportes;
+        String numeroTotalDeDomiciliaciones = null;
+        String numeroTotalRegistrosSoporte = null;
         
-        
-        //this.liniaTotalGeneral = 
+        this.liniaTotalGeneral = codigoDeRegistro + codigoDeDato + NIF_codigoPresentador + sufijo_codigoPresentador + espaisEnBlanc(12) +
+                    espaisEnBlanc(40) + numeroDeOrdenantes + espaisEnBlanc(16) + totalImportes + espaisEnBlanc(6) + numeroTotalDeDomiciliaciones +
+                    numeroTotalRegistrosSoporte + espaisEnBlanc(20) + espaisEnBlanc(18);
     }
     
     
