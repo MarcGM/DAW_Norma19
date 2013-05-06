@@ -16,6 +16,15 @@ public class CreacioFitxerNorma19
     public Connexio connexio;
     public Calendar calendariGlobal;
     
+    public String liniaCapceleraDePresentador;
+    public String liniaCapceleraDeOrdenante;
+    public ArrayList<String> arrayLiniesFitxerIO;
+    public String liniaTotalOrdenante;
+    public String liniaTotalGeneral;
+    
+    public String nifCodigoOrdenanteCompartit;
+    public String sufijoCodigoOrdenanteCompartit;
+    
     
     public CreacioFitxerNorma19(int idClientePresentador,int idClienteOrdenante)
     {
@@ -31,7 +40,7 @@ public class CreacioFitxerNorma19
     
     public void crearCapceleraPresentador()
     {
-        ArrayList<String> consulta_AL_cPresentador = this.connexio.retornarRegistres("SELECT nom, cognoms, NIF, sufijo, entidad, oficina, telefon, email FROM clients WHERE idClient = '"+this.idClienteOrdenante+"';");
+        ArrayList<String> consulta_AL_cPresentador = this.connexio.retornarRegistres("SELECT nom, cognoms, NIF, sufijo, entidad, oficina, telefon, email FROM clients WHERE idClient = '"+this.idClientePresentador+"';");
         
         String codigoDeRegistro = "51";
         String codigoDeDato = "80";
@@ -52,19 +61,22 @@ public class CreacioFitxerNorma19
         String oficina = consulta_AL_cPresentador.get(5);
         
         
-        String liniaCapceleraDePresentador = codigoDeRegistro + codigoDeDato + NIF_codigoPresentador + sufijo_codigoPresentador +
+        this.liniaCapceleraDePresentador = codigoDeRegistro + codigoDeDato + NIF_codigoPresentador + sufijo_codigoPresentador +
                 fechaConfeccionSoporte + espaisEnBlanc(6) + nombreDelClientePresentador + espaisEnBlanc(20) + entidadReceptora + oficina +
                 espaisEnBlanc(12) + espaisEnBlanc(40) + espaisEnBlanc(14);
+        
     }
     
     public void crearCapceleraOrdenante()
     {
-        ArrayList<String> consulta_AL_cOrdenante = this.connexio.retornarRegistres("SELECT nom, cognoms, NIF, sufijo, entidad, oficina, DC, numeroDeCuenta, telefon, email FROM clients WHERE idClient = '"+this.idClientePresentador+"';");
+        ArrayList<String> consulta_AL_cOrdenante = this.connexio.retornarRegistres("SELECT nom, cognoms, NIF, sufijo, entidad, oficina, DC, numeroDeCuenta, telefon, email FROM clients WHERE idClient = '"+this.idClienteOrdenante+"';");
         
         String codigoDeRegistro = "53";
         String codigoDeDato = "80";
         String NIF_codigoOrdenante = consulta_AL_cOrdenante.get(2);
+        this.nifCodigoOrdenanteCompartit = NIF_codigoOrdenante;
         String sufijo_codigoOrdenante = consulta_AL_cOrdenante.get(3);
+        this.sufijoCodigoOrdenanteCompartit = sufijo_codigoOrdenante;
         
         Calendar calendari = Calendar.getInstance();
         String diaActual = String.valueOf(calendari.DAY_OF_MONTH);
@@ -81,7 +93,7 @@ public class CreacioFitxerNorma19
         String procedimiento = "01";
         
         
-        String liniaCapceleraDeOrdenante = codigoDeRegistro + codigoDeDato + NIF_codigoOrdenante + sufijo_codigoOrdenante +
+        this.liniaCapceleraDeOrdenante = codigoDeRegistro + codigoDeDato + NIF_codigoOrdenante + sufijo_codigoOrdenante +
                 fechaConfeccionSoporte + fechaDeCargo + nombreDelClienteOrdenante + entidad_CCCClienteOrdenante + 
                 oficina_CCCClienteOrdenante + DC_CCCClienteOrdenante + numeroCuenta_CCCClienteOrdenante + espaisEnBlanc(8) + procedimiento +
                 espaisEnBlanc(10) + espaisEnBlanc(40) + espaisEnBlanc(14);
@@ -89,6 +101,7 @@ public class CreacioFitxerNorma19
     
     public void crearIndividualObligatorio()
     {
+        arrayLiniesFitxerIO = new ArrayList<String>();
         java.util.Date utilDate = new java.util.Date();
         //La variable "sqlDate", és la dat ctual però en format SQL.
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -98,46 +111,56 @@ public class CreacioFitxerNorma19
             Connexio connexio_2 = new Connexio("localhost","daw_m4_uf6_pt1","usuari","contrasenya");
             ResultSet consultaRegistresIO = connexio_2.retornarRegistresResultset("SELECT * FROM rebuts WHERE idClienteOrdenante = "+this.idClienteOrdenante+" AND fechaRecibo >= '"+sqlDate+"';");
             
-            while(consultaRegistresIO.next()){
-                int idClientConsulta = consultaRegistresIO.getInt(1);
-                System.out.println(idClientConsulta);
+            while(consultaRegistresIO.next())
+            {
+                //Xivato pera saber quin rebut està fent actualment
+                int idRebutConsulta = consultaRegistresIO.getInt(1);
+                System.out.println(idRebutConsulta);
+                
+                String codigoDeRegistro = "56";
+                String codigoDeDato = "80";
+                String NIF_codigoOrdenante = ""; //OMPLIR //Consulta BD Taula Clients.
+                String sufijo_codigoOrdenante = ""; //OMPLIR
+                String codigoDeReferencia = consultaRegistresIO.getString(4); //OMPLIR
+                String nombreTitularDeLaDomiciliacion = ""; //OMPLIR //Consulta BD Taula Clients.
+                String entidad_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
+                String oficina_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
+                String DC_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
+                String numeroCuenta_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
+                String importe = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
+                String primerCampoConcepto = ""; //OMPLIR
+
+                String liniaIndividualObligatorio = codigoDeRegistro + codigoDeDato + NIF_codigoOrdenante + sufijo_codigoOrdenante +
+                        codigoDeReferencia + nombreTitularDeLaDomiciliacion + entidad_CCCAdeudo + oficina_CCCAdeudo + DC_CCCAdeudo +
+                        numeroCuenta_CCCAdeudo + importe + espaisEnBlanc(16) + primerCampoConcepto + espaisEnBlanc(8);
+                
+                arrayLiniesFitxerIO.add(liniaIndividualObligatorio);
             }
-            
         }catch(SQLException e){
             printSQLException(e);
         }
         
-        String codigoDeRegistro = "56";
-        String codigoDeDato = "80";
-        String NIF_codigoOrdenante = ""; //OMPLIR //Consulta BD Taula Clients.
-        String sufijo_codigoOrdenante = ""; //OMPLIR
-        String codigoDeReferencia = ""; //OMPLIR
-        String nombreTitularDeLaDomiciliacion = ""; //OMPLIR //Consulta BD Taula Clients.
-        String entidad_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-        String oficina_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-        String DC_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-        String numeroCuenta_CCCAdeudo = ""; //OMPLIR //Consulta BD Taula Clients.
-        String importe = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
-        String primerCampoConcepto = ""; //OMPLIR
         
-        
-        String liniaIndividualObligatorio = codigoDeRegistro + codigoDeDato + NIF_codigoOrdenante + sufijo_codigoOrdenante +
-                codigoDeReferencia + nombreTitularDeLaDomiciliacion + entidad_CCCAdeudo + oficina_CCCAdeudo + DC_CCCAdeudo +
-                numeroCuenta_CCCAdeudo + importe + espaisEnBlanc(16) + primerCampoConcepto + espaisEnBlanc(8);
     }
     
     public void crearTotalOrdenante()
     {
         String codigoDeRegistro = "58";
         String codigoDeDato = "80";
-        String NIF_codigoOrdenante = ""; //OMPLIR //Consulta BD Taula Clients.
-        String sufijo_codigoOrdenante = ""; //OMPLIR
+        String NIF_codigoOrdenante = this.nifCodigoOrdenanteCompartit;
+        String sufijo_codigoOrdenante = this.sufijoCodigoOrdenanteCompartit;
         String sumaImportesOrdenante = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
         String numeroDomiciliacionesOrdenante = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
         String numeroTotalRegistroOrdenante = ""; //OMPLIR (potser s'ha de possar "decimal" o "int").
         
+        //this.liniaTotalOrdenante = 
+    }
+    
+    public void crearTotalGeneral()
+    {
         
-        //String liniaTotalOrdenante = 
+        
+        //this.liniaTotalGeneral = 
     }
     
     
