@@ -51,7 +51,7 @@ public class Connexio
         try{
             stmt = this.con.createStatement();
             ResultSet rs = stmt.executeQuery(consulta);
-
+            
             while(rs.next()){
                 vectorIdClients.add(rs.getInt(1));
             }
@@ -77,8 +77,8 @@ public class Connexio
             while(rs.next()){
                 conjuntRegistres.add(rs.getString(cont));
             }
-            
             stmt.close();
+            this.con.close();
         }catch (SQLException e){
             printSQLException(e);
         }finally{
@@ -88,30 +88,17 @@ public class Connexio
     
     public ResultSet retornarRegistresResultset(String consultaSQL)
     {
-        Statement stmnt;
+        Statement stmnt = null;
         ResultSet rst = null;
+        Connection connn;
         
         try{
-            stmnt = this.con.createStatement();
+            connn = DriverManager.getConnection
+                ("jdbc:mysql://localhost:3306/"+this.baseDades,this.usuariBD,this.contrasenyaBD);
+            stmnt = connn.createStatement();
             rst = stmnt.executeQuery(consultaSQL);
-            
-            while(rst.next()){
-                //System.out.println(rst.getDate(2));
-                String ola = rst.getString(6);
-                System.out.println(ola);
-            }
-            stmnt.close();
         }catch (SQLException e){
-            //printSQLException(e);
-            stmnt = this.con.createStatement();
-            rst = stmnt.executeQuery(consultaSQL);
-            
-            while(rst.next()){
-                //System.out.println(rst.getDate(2));
-                String ola = rst.getString(6);
-                System.out.println(ola);
-            }
-            stmnt.close();
+            printSQLException(e);
         }finally{
             return rst;
         }

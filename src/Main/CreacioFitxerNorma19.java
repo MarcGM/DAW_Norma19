@@ -96,10 +96,11 @@ public class CreacioFitxerNorma19
             Statement stmt = null;
             ResultSet rs = null;
             Connexio connexio_2 = new Connexio("localhost","daw_m4_uf6_pt1","usuari","contrasenya");
-            ResultSet consultaRegistresIO = connexio_2.retornarRegistresResultset("SELECT * FROM rebuts WHERE idClienteOrdenante = "+this.idClienteOrdenante+";");
+            ResultSet consultaRegistresIO = connexio_2.retornarRegistresResultset("SELECT * FROM rebuts WHERE idClienteOrdenante = "+this.idClienteOrdenante+" AND fechaRecibo >= '"+sqlDate+"';");
             
             while(consultaRegistresIO.next()){
-                System.out.println(consultaRegistresIO.getDate(2));
+                int idClientConsulta = consultaRegistresIO.getInt(1);
+                System.out.println(idClientConsulta);
             }
             
         }catch(SQLException e){
